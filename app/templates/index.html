@@ -1,0 +1,50 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<title>Flask-SocketIO-Celery</title>
+	<script type="text/javascript" src="//code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+</head>
+<body>
+	<h1>Flask-SocketIO-Celery Demo</h1>
+	<br>
+	<!--<h3>Enter your name:</h3>-->
+	<!--<form id="emit" method="POST" action="run_task">-->
+		<!--<input type="text" id="emit_name" name="emit_name" placeholder="your name">-->
+		<!--<input type="submit" id="task_button" value="send">-->
+	<!--</form>-->
+	<p id="emit_name">hello, {{ name }}</p>
+    <button id="login_button">click to get receive value</button>
+    <br>
+	<br>
+	<!--<a id="task_button" href="{{ url_for('start_task') }}">start background tasks</a>-->
+	<br>
+	<h2>Receive:</h2>
+	<p id="receive_div"></p>
+
+	<script type="text/javascript">
+        $(document).ready(function() {
+        	namespace = '/test_conn';
+        	console.log('document ready');
+
+        	var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
+
+        	socket.on('connect', function (msg) {
+				socket.emit('test', {data: 'hello'})
+			})
+
+        	socket.on('test_message', function (msg) {
+        		console.log(msg['data'])
+				$('#receive_div').text(msg['data'])
+			})
+
+			$('#login_button').click(function () {
+				console.log('button click')
+				socket.emit('join_room', {name: $('#emit_name').text()})
+			})
+
+		});
+
+	</script>
+</body>
+</html>

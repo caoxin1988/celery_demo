@@ -1,0 +1,16 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.tuna.tsinghua.edu.cn/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+celery = {extras = ["redis"],version = "*"}
+eventlet = "*"
+flask = "*"
+flask-socketio = "*"
+gunicorn = "*"
+
+[requires]
+python_version = "3.7"
