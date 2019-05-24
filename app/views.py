@@ -73,5 +73,3 @@ def joinroom(msg):
 
     add.delay(session['id'])
 
-
-# todo: session in websocket is same?
