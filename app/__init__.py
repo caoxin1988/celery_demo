@@ -29,3 +29,4 @@ app = create_app()
 
 
 from . import views
+from . import demo2_view

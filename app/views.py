@@ -41,13 +41,6 @@ def login():
     return render_template('index.html', name=name)
 
 
-# @app.route('/start_task')
-# def start_task():
-#     add.delay(session['id'])
-#
-#     return render_template('index.html', name=session['id'])
-
-
 @celery_app.task
 def add(room):
     print('room = {}'.format(room))

@@ -6,14 +6,13 @@
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 </head>
 <body>
-	<h1>Flask-SocketIO-Celery Demo</h1>
+	<h1>Flask-SocketIO-Celery Demo2</h1>
 	<br>
 
-	<p id="emit_name">hello, {{ name }}</p>
-    <button id="login_button">click to get receive value</button>
+	<p id="emit_name">hello, {{ name }}, this is demo2_view</p>
 	<br>
 
-    <a href="/demo2_view">go to demo2</a>
+    <button id="start-bg-job">Start Background Job</button>
     <br>
 	<br>
 	<br>
@@ -28,19 +27,22 @@
 
         	var socket = io.connect(location.protocol + '//' + document.domain + ':' + location.port + namespace);
 
-        	socket.on('connect', function (msg) {
-				socket.emit('test', {data: 'hello'})
-			})
+        	function start_long_task() {
+				console.log('start long task with ajax')
+                $.ajax({
+					type: 'GET',
+					url : '/longtask',
+					success: function (data, status, request) {
+						console.log('ajax success ' + data['data'])
+					},
+                    error: function () {
+						console.log('ajax get an error')
+						alert('ajax error')
+					}
+				})
+			}
 
-        	socket.on('test_message', function (msg) {
-        		console.log(msg['data'])
-				$('#receive_div').text(msg['data'])
-			})
-
-			$('#login_button').click(function () {
-				console.log('button click')
-				socket.emit('join_room', {name: $('#emit_name').text()})
-			})
+			$('#start-bg-job').click(start_long_task)
 
 		});
 
